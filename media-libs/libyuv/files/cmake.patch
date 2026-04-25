@@ -1,0 +1,31 @@
+diff -u a/CMakeLists.txt b/CMakeLists.txt
+--- a/CMakeLists.txt	2023-12-20 05:14:53.297452206 +0000
++++ b/CMakeLists.txt	2023-12-20 05:46:39.061922008 +0000
+@@ -20,6 +20,8 @@
+ FILE ( GLOB_RECURSE	ly_unittest_sources ${ly_tst_dir}/*.cc )
+ LIST ( SORT			ly_unittest_sources )
+ 
++include(GNUInstallDirs)
++
+ INCLUDE_DIRECTORIES( BEFORE ${ly_inc_dir} )
+ 
+ if(MSVC)
+@@ -92,12 +94,14 @@
+   endif()
+ endif()
+ 
++configure_file(libyuv.pc.in libyuv.pc @ONLY)
+ 
+ # install the conversion tool, .so, .a, and all the header files
+-INSTALL ( PROGRAMS ${CMAKE_BINARY_DIR}/yuvconvert			DESTINATION bin )
+-INSTALL ( TARGETS ${ly_lib_static}						DESTINATION lib )
+-INSTALL ( TARGETS ${ly_lib_shared} LIBRARY				DESTINATION lib RUNTIME DESTINATION bin )
+-INSTALL ( DIRECTORY ${PROJECT_SOURCE_DIR}/include/		DESTINATION include )
++INSTALL ( PROGRAMS ${CMAKE_BINARY_DIR}/yuvconvert			DESTINATION "${CMAKE_INSTALL_BINDIR}" )
++INSTALL ( TARGETS ${ly_lib_static}						DESTINATION "${CMAKE_INSTALL_LIBDIR}" )
++INSTALL ( TARGETS ${ly_lib_shared} LIBRARY	DESTINATION "${CMAKE_INSTALL_LIBDIR}" RUNTIME DESTINATION	"${CMAKE_INSTALL_BINDIR}" )
++INSTALL ( DIRECTORY ${PROJECT_SOURCE_DIR}/include/		DESTINATION	"${CMAKE_INSTALL_INCLUDEDIR}" )
++INSTALL ( FILES ${CMAKE_BINARY_DIR}/libyuv.pc			DESTINATION	"${CMAKE_INSTALL_LIBDIR}/pkgconfig" )
+ 
+ # create the .deb and .rpm packages using cpack
+ INCLUDE ( CM_linux_packages.cmake )
