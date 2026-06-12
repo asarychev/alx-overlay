@@ -1,0 +1,5 @@
+MD5 1d447a8ed515727dc6800f5c5b107ed5 siproxd-0.5.7.ebuild 1039
+MD5 db51632c99fad85c68691062339d92b5 siproxd-0.5.10.ebuild 1478
+MD5 438e22960bba85b850ec956b41581cab files/digest-siproxd-0.5.10 66
+MD5 4c99d7d67b89f73a6e9c9d0b8ef6a888 files/digest-siproxd-0.5.7 65
+MD5 15303d5d4e5be40404e319f99096f605 files/siproxd.rc 616

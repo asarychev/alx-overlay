@@ -1,0 +1,30 @@
+#!/sbin/runscript
+# Copyright 1999-2004 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
+depend() {
+	need net 
+}
+
+checkconfig() {
+	if [ ! -e /etc/siproxd.conf ] ; then
+		eerror "You will need an /etc/siproxd.conf first"
+		eerror "There is a sample in /etc"
+		return 1
+	fi
+}
+
+start() {
+	checkconfig || return 1
+	ebegin "Starting siproxd"
+	start-stop-daemon --start --quiet --exec /usr/sbin/siproxd
+	echo `pidof siproxd` > /var/run/siproxd.pid
+	eend $?
+}
+
+stop() {
+	ebegin "Stopping siproxd"
+	start-stop-daemon --stop --quiet --pidfile /var/run/siproxd.pid
+	eend $?
+}
